@@ -1,0 +1,71 @@
+# Setup Guide
+
+This guide will help you set up the Zip Benchmarking Project on your local machine.
+
+## Prerequisites
+
+Ensure you have the following installed:
+
+- Git
+- Node.js (v14+)
+- Go (v1.16+)
+- Rust (latest stable)
+- Python (v3.8+)
+- C++ compiler (g++ or clang++)
+- Java Development Kit (JDK 11+)
+
+## Installation Steps
+
+1. Clone the repository:
+
+   ```sh
+   git clone https://github.com/shaheemMPM/zip-benchmark.git
+   cd zip-benchmark
+   ```
+
+2. Set up each implementation:
+
+- Node.js (jszip and 7zip):
+
+  ```sh
+  cd implementations/nodejs-jszip && yarn install
+  cd ../nodejs-7zip && yarn install
+  ```
+
+- Go:
+
+  ```sh
+  cd implementations/golang-archive-zip && go mod tidy
+  ```
+
+- Rust:
+
+  ```sh
+  cd implementations/rust-zip-rs && cargo build
+  ```
+
+- Python:
+
+  ```sh
+  cd implementations/python-zipfile && pip install -r requirements.txt
+  ```
+
+- C++:
+
+  ```sh
+  cd implementations/cpp-libzip && cmake . && make
+  ```
+
+- Java:
+
+  ```sh
+  cd implementations/java-util-zip && mvn install
+  ```
+
+3. Generate test data:
+
+   ```sh
+   python common/utils/file_generator.py
+   ```
+
+You're now ready to run benchmarks!

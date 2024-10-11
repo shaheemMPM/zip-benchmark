@@ -1,0 +1,22 @@
+{
+  "name": "nodejs-jszip",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "author": {
+    "email": "shaheem.mpm@gmail.com",
+    "name": "Mohammed Shaheem P",
+    "url": "https://shaheem.me"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "jszip": "^3.10.1"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "standard:check": "standard",
+    "standard:fix": "standard --fix"
+  },
+  "devDependencies": {
+    "standard": "^17.1.2"
+  }
+}

@@ -1,0 +1,62 @@
+# Working Files
+.junk
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+go.work
+
+# Rust
+target/
+Cargo.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+
+# C++
+*.o
+*.obj
+*.exe
+*.out
+*.app
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.logs
+*.iml
+.idea/
+.gradle/
+
+# General
+.DS_Store
+.vscode/
+*.log
+*.bak
+*.swp
+*~.nib
+
+# Project specific
+benchmark/results/*
+!benchmark/results/README.md
+common/test_data/sample_pdfs/*
+!common/test_data/sample_pdfs/.gitkeep
+output/*
+!output/README.md
