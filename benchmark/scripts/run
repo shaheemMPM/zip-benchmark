@@ -27,6 +27,7 @@ run_benchmark "$IMPLEMENTATIONS_DIR/nodejs-jszip" "nodejs-jszip"
 run_benchmark "$IMPLEMENTATIONS_DIR/nodejs-7zip" "nodejs-7zip"
 run_benchmark "$IMPLEMENTATIONS_DIR/python-zipfile" "python-zipfile"
 run_benchmark "$IMPLEMENTATIONS_DIR/golang-archive-zip" "golang-archive-zip"
+run_benchmark "$IMPLEMENTATIONS_DIR/rust-zip-rs" "rust-zip-rs"
 
 echo "All benchmarks completed. Results are stored in $RUN_DIR"
 

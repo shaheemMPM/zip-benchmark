@@ -69,7 +69,7 @@ If you see the 7-Zip help message, the installation was successful.
 - Rust:
 
   ```sh
-  cd implementations/rust-zip-rs && cargo build
+  cd implementations/rust-zip-rs && cargo build --release
   ```
 
 - Python:
