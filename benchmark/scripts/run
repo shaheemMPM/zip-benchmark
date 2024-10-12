@@ -9,6 +9,8 @@ RUN_DIR="$RESULTS_DIR/run_$TIMESTAMP"
 
 mkdir -p "$RUN_DIR"
 
+all_implementations=("nodejs-jszip" "nodejs-7zip" "python-zipfile" "golang-archive-zip" "rust-zip-rs")
+
 run_benchmark() {
     impl_dir="$1"
     impl_name="$2"
@@ -23,11 +25,41 @@ run_benchmark() {
     echo
 }
 
-run_benchmark "$IMPLEMENTATIONS_DIR/nodejs-jszip" "nodejs-jszip"
-run_benchmark "$IMPLEMENTATIONS_DIR/nodejs-7zip" "nodejs-7zip"
-run_benchmark "$IMPLEMENTATIONS_DIR/python-zipfile" "python-zipfile"
-run_benchmark "$IMPLEMENTATIONS_DIR/golang-archive-zip" "golang-archive-zip"
-run_benchmark "$IMPLEMENTATIONS_DIR/rust-zip-rs" "rust-zip-rs"
+print_usage() {
+    echo "Usage: ./run [OPTIONS]"
+    echo "Options:"
+    echo "  all                   Run benchmarks for all implementations"
+    echo "  <implementation list> Run benchmarks for specific implementations"
+    echo ""
+    echo "Available implementations:"
+    for impl in "${all_implementations[@]}"; do
+        echo "  $impl"
+    done
+}
+
+if [ $# -eq 0 ]; then
+    print_usage
+    exit 1
+fi
+
+implementations_to_run=()
+if [ "$1" = "all" ]; then
+    implementations_to_run=("${all_implementations[@]}")
+else
+    for arg in "$@"; do
+        if [[ " ${all_implementations[@]} " =~ " ${arg} " ]]; then
+            implementations_to_run+=("$arg")
+        else
+            echo "Invalid implementation: $arg"
+            print_usage
+            exit 1
+        fi
+    done
+fi
+
+for impl in "${implementations_to_run[@]}"; do
+    run_benchmark "$IMPLEMENTATIONS_DIR/$impl" "$impl"
+done
 
 echo "All benchmarks completed. Results are stored in $RUN_DIR"
 
