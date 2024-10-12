@@ -1,0 +1,31 @@
+#!/bin/bash
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
+IMPLEMENTATIONS_DIR="$PROJECT_ROOT/implementations"
+RESULTS_DIR="$PROJECT_ROOT/benchmark/results"
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+RUN_DIR="$RESULTS_DIR/run_$TIMESTAMP"
+
+mkdir -p "$RUN_DIR"
+
+run_benchmark() {
+    impl_dir="$1"
+    impl_name="$2"
+    echo "Running benchmark for $impl_name..."
+    
+    cd "$impl_dir"
+    
+    output_file="$RUN_DIR/${impl_name}_result.txt"
+    { time ./benchmark; } 2>&1 | tee "$output_file"
+    
+    echo "Benchmark for $impl_name completed."
+    echo
+}
+
+run_benchmark "$IMPLEMENTATIONS_DIR/nodejs-jszip" "nodejs-jszip"
+run_benchmark "$IMPLEMENTATIONS_DIR/nodejs-7zip" "nodejs-7zip"
+
+echo "All benchmarks completed. Results are stored in $RUN_DIR"
+
+python "$SCRIPT_DIR/generate_report.py" "$RUN_DIR"

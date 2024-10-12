@@ -15,7 +15,7 @@ To run benchmarks for all implementations:
 2. Run the benchmark script:
 
    ```sh
-   ./benchmark/scripts/run_all_benchmarks.sh
+   ./benchmark/scripts/run
    ```
 
    This script will:
@@ -31,12 +31,12 @@ To benchmark a specific implementation:
 2. Run the implementation-specific benchmark script. For example:
    ```sh
    cd implementations/rust-zip-rs
-   ./benchmark.sh
+   ./benchmark
    ```
 
 ## Customizing Benchmarks
 
-You can customize benchmark parameters by editing `benchmark/scripts/run_all_benchmarks.sh` or the individual implementation benchmark scripts.
+You can customize benchmark parameters by editing `benchmark/scripts/run` or the individual implementation benchmark scripts.
 
 Key parameters to consider:
 
