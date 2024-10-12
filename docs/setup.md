@@ -13,6 +13,34 @@ Ensure you have the following installed:
 - Python (v3.8+)
 - C++ compiler (g++ or clang++)
 - Java Development Kit (JDK 11+)
+- 7-Zip
+
+### Installing 7-Zip
+
+7-Zip is required for the Node.js 7-Zip implementation. Here's how to install it on different operating systems:
+
+- On macOS:
+
+  ```
+  brew install p7zip
+  ```
+
+- On Ubuntu/Debian:
+
+  ```
+  sudo apt-get install p7zip-full
+  ```
+
+- On Windows:
+  Download and install from the [7-Zip website](https://www.7-zip.org/)
+
+After installing 7-Zip, ensure it's accessible from the command line by running:
+
+```
+7z --help
+```
+
+If you see the 7-Zip help message, the installation was successful.
 
 ## Installation Steps
 
