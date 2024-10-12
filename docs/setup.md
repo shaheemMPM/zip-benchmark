@@ -64,6 +64,7 @@ If you see the 7-Zip help message, the installation was successful.
 
   ```sh
   cd implementations/golang-archive-zip && go mod tidy
+  go build -o release -ldflags="-s -w" -trimpath
   ```
 
 - Rust:

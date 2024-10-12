@@ -12,7 +12,11 @@ Ensure you have Go (v1.16+) installed on your system.
    ```bash
    cd implementations/golang-archive-zip
    ```
-2. The Go module is already initialized. If you need to add any dependencies (which is not necessary for this implementation), you can use `go get`.
+2. Build the release binary
+   ```bash
+   go mod tidy && go build -o release -ldflags="-s -w" -trimpath
+   ```
+3. The Go module is already initialized. If you need to add any dependencies (which is not necessary for this implementation), you can use `go get`.
 
 ## Running the benchmark
 
