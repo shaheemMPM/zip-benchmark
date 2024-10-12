@@ -9,7 +9,7 @@ RUN_DIR="$RESULTS_DIR/run_$TIMESTAMP"
 
 mkdir -p "$RUN_DIR"
 
-all_implementations=("nodejs-jszip" "nodejs-7zip" "python-zipfile" "golang-archive-zip" "rust-zip-rs")
+all_implementations=("nodejs-jszip" "nodejs-7zip" "python-zipfile" "golang-archive-zip" "rust-zip-rs" "cpp-libzip")
 
 run_benchmark() {
     impl_dir="$1"

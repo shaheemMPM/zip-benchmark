@@ -14,6 +14,7 @@ Ensure you have the following installed:
 - C++ compiler (g++ or clang++)
 - Java Development Kit (JDK 11+)
 - 7-Zip
+- libzip
 
 ### Installing 7-Zip
 
@@ -41,6 +42,33 @@ After installing 7-Zip, ensure it's accessible from the command line by running:
 ```
 
 If you see the 7-Zip help message, the installation was successful.
+
+### Installing libzip
+
+libzip is required for the C++ implementation. Here's how to install it on different operating systems:
+
+- On macOS:
+
+  ```
+  brew install libzip
+  ```
+
+- On Ubuntu/Debian:
+
+  ```
+  sudo apt-get install libzip-dev
+  ```
+
+- On Windows:
+  Download and install from the [libzip website](https://libzip.org/download/)
+
+After installing libzip, ensure it's accessible from the command line by running:
+
+```
+pkg-config --modversion libzip
+```
+
+If you see a version number, the installation was successful.
 
 ## Installation Steps
 
@@ -82,7 +110,7 @@ If you see the 7-Zip help message, the installation was successful.
 - C++:
 
   ```sh
-  cd implementations/cpp-libzip && cmake . && make
+  cd implementations/cpp-libzip && sh build.sh
   ```
 
 - Java:
