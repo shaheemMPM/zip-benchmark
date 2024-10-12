@@ -1,0 +1,5 @@
+#!/bin/bash
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+java -cp "$SCRIPT_DIR/target/java-util-zip-1.0-SNAPSHOT.jar" com.zipbenchmark.JavaZipBenchmark
