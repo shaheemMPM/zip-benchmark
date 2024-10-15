@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zip Benchmark Report</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+        cursor: pointer;
+      }
+      th:hover {
+        background-color: #ddd;
+      }
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      .sort-icon::after {
+        content: " ↕";
+      }
+      .sort-asc::after {
+        content: " ↑";
+      }
+      .sort-desc::after {
+        content: " ↓";
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Zip Benchmark Report</h1>
+    <p>Generated on: 2024-10-15 22:53:19</p>
+    <table id="benchmarkTable">
+      <thead>
+        <tr>
+          <th class="sort-icon" onclick="sortTable(0)">Implementation</th>
+          <th class="sort-icon" onclick="sortTable(1)">Execution Time</th>
+          <th class="sort-icon" onclick="sortTable(2)">Memory Usage</th>
+          <th class="sort-icon" onclick="sortTable(3)">Compression Ratio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>python-zipfile</td>
+          <td>00.48</td>
+          <td>13 MB</td>
+          <td>15.74%</td>
+        </tr>
+
+        <tr>
+          <td>nodejs-jszip</td>
+          <td>00.50</td>
+          <td>57 MB</td>
+          <td>-0.05%</td>
+        </tr>
+
+        <tr>
+          <td>golang-archive-zip</td>
+          <td>00.51</td>
+          <td>5 MB</td>
+          <td>15.58%</td>
+        </tr>
+
+        <tr>
+          <td>java-util-zip</td>
+          <td>00.64</td>
+          <td>46 MB</td>
+          <td>15.74%</td>
+        </tr>
+
+        <tr>
+          <td>nodejs-7zip</td>
+          <td>00.27</td>
+          <td>83 MB</td>
+          <td>15.96%</td>
+        </tr>
+
+        <tr>
+          <td>rust-zip-rs</td>
+          <td>00.44</td>
+          <td>4 MB</td>
+          <td>15.94%</td>
+        </tr>
+
+        <tr>
+          <td>cpp-libzip</td>
+          <td>02.00</td>
+          <td>6 MB</td>
+          <td>32.62%</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Conclusions</h2>
+    <p>Add your analysis and conclusions here.</p>
+
+    <script>
+      function sortTable(n) {
+        var table,
+          rows,
+          switching,
+          i,
+          x,
+          y,
+          shouldSwitch,
+          dir,
+          switchcount = 0;
+        table = document.getElementById("benchmarkTable");
+        switching = true;
+        dir = "asc";
+        while (switching) {
+          switching = false;
+          rows = table.rows;
+          for (i = 1; i < rows.length - 1; i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            if (dir == "asc") {
+              if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+              }
+            } else if (dir == "desc") {
+              if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+              }
+            }
+          }
+          if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+          } else {
+            if (switchcount == 0 && dir == "asc") {
+              dir = "desc";
+              switching = true;
+            }
+          }
+        }
+
+        // Update sort icons
+        var headers = table.getElementsByTagName("TH");
+        for (i = 0; i < headers.length; i++) {
+          headers[i].classList.remove("sort-asc", "sort-desc");
+          if (i === n) {
+            headers[i].classList.add(dir === "asc" ? "sort-asc" : "sort-desc");
+          } else {
+            headers[i].classList.add("sort-icon");
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
