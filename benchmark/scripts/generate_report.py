@@ -12,12 +12,14 @@ def parse_result_file(file_path):
     compression_ratio = "N/A"
 
     for line in content.split("\n"):
-        if "real" in line:
-            execution_time = line.split()[1]
-        elif "maximum resident set size" in line.lower():
-            memory_usage = line.split()[-1] + " KB"
-        elif "compression ratio:" in line.lower():
-            compression_ratio = line.split(":")[1].strip()
+        if "Elapsed (wall clock) time" in line:
+            execution_time = line.split(":")[-1].strip()
+        elif "Maximum resident set size (kbytes)" in line:
+            memory_kb = int(line.split(":")[-1].strip())
+            memory_usage = f"{memory_kb // 1024} MB"
+        # We'll keep this for future use when we add compression ratio
+        # elif "compression ratio:" in line.lower():
+        #     compression_ratio = line.split(":")[-1].strip()
 
     return {
         "execution_time": execution_time,

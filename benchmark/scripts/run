@@ -19,7 +19,14 @@ run_benchmark() {
     cd "$impl_dir"
     
     output_file="$RUN_DIR/${impl_name}_result.txt"
-    { time ./benchmark; } 2>&1 | tee "$output_file"
+    
+    { gtime -v ./benchmark; } &> "$output_file"
+    
+    memory_usage=$(grep "Maximum resident set size" "$output_file" | awk '{print $6 " KB"}')
+    total_time=$(grep "Elapsed (wall clock) time" "$output_file" | awk '{print $8}')
+    
+    echo "Memory Usage: $memory_usage"
+    echo "Total Time: $total_time"
     
     echo "Benchmark for $impl_name completed."
     echo

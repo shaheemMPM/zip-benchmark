@@ -15,6 +15,7 @@ Ensure you have the following installed:
 - Java Development Kit (JDK 11+)
 - 7-Zip
 - libzip
+- GNU Time
 
 ### Installing 7-Zip
 
@@ -69,6 +70,35 @@ pkg-config --modversion libzip
 ```
 
 If you see a version number, the installation was successful.
+
+### Installing GNU Time
+
+GNU Time is required for accurate benchmarking. Here's how to install it on different operating systems:
+
+- On macOS:
+
+  ```bash
+  brew install gnu-time
+  ```
+
+  After installation, you can use it with the command gtime.
+
+- On Ubuntu/Debian: GNU Time is usually pre-installed. If not, you can install it with:
+
+  ```bash
+  sudo apt-get install time
+  ```
+
+  You can use it with the command time.
+
+- On Windows: GNU Time is not natively available. Consider using Windows Subsystem for Linux (WSL) and follow the Ubuntu/Debian instructions.
+
+After installing GNU Time, ensure it's accessible from the command line:
+
+- On macOS: `gtime --version`
+- On Linux: `time --version`
+
+If you see version information, the installation was successful.
 
 ## Installation Steps
 
