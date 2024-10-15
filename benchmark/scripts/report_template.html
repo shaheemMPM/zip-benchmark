@@ -22,32 +22,107 @@
       }
       th {
         background-color: #f2f2f2;
+        cursor: pointer;
+      }
+      th:hover {
+        background-color: #ddd;
       }
       tr:nth-child(even) {
         background-color: #f9f9f9;
+      }
+      .sort-icon::after {
+        content: " ↕";
+      }
+      .sort-asc::after {
+        content: " ↑";
+      }
+      .sort-desc::after {
+        content: " ↓";
       }
     </style>
   </head>
   <body>
     <h1>Zip Benchmark Report</h1>
     <p>Generated on: {{ generated_on }}</p>
-    <table>
-      <tr>
-        <th>Implementation</th>
-        <th>Execution Time</th>
-        <th>Memory Usage</th>
-        <th>Compression Ratio</th>
-      </tr>
-      {% for result in results %}
-      <tr>
-        <td>{{ result.implementation }}</td>
-        <td>{{ result.execution_time }}</td>
-        <td>{{ result.memory_usage }}</td>
-        <td>{{ result.compression_ratio }}</td>
-      </tr>
-      {% endfor %}
+    <table id="benchmarkTable">
+      <thead>
+        <tr>
+          <th class="sort-icon" onclick="sortTable(0)">Implementation</th>
+          <th class="sort-icon" onclick="sortTable(1)">Execution Time</th>
+          <th class="sort-icon" onclick="sortTable(2)">Memory Usage</th>
+          <th class="sort-icon" onclick="sortTable(3)">Compression Ratio</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for result in results %}
+        <tr>
+          <td>{{ result.implementation }}</td>
+          <td>{{ result.execution_time }}</td>
+          <td>{{ result.memory_usage }}</td>
+          <td>{{ result.compression_ratio }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
     <h2>Conclusions</h2>
     <p>Add your analysis and conclusions here.</p>
+
+    <script>
+      function sortTable(n) {
+        var table,
+          rows,
+          switching,
+          i,
+          x,
+          y,
+          shouldSwitch,
+          dir,
+          switchcount = 0;
+        table = document.getElementById("benchmarkTable");
+        switching = true;
+        dir = "asc";
+        while (switching) {
+          switching = false;
+          rows = table.rows;
+          for (i = 1; i < rows.length - 1; i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            if (dir == "asc") {
+              if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+              }
+            } else if (dir == "desc") {
+              if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+              }
+            }
+          }
+          if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+          } else {
+            if (switchcount == 0 && dir == "asc") {
+              dir = "desc";
+              switching = true;
+            }
+          }
+        }
+
+        // Update sort icons
+        var headers = table.getElementsByTagName("TH");
+        for (i = 0; i < headers.length; i++) {
+          headers[i].classList.remove("sort-asc", "sort-desc");
+          if (i === n) {
+            headers[i].classList.add(dir === "asc" ? "sort-asc" : "sort-desc");
+          } else {
+            headers[i].classList.add("sort-icon");
+          }
+        }
+      }
+    </script>
   </body>
 </html>
