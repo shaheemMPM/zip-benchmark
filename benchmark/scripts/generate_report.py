@@ -17,9 +17,8 @@ def parse_result_file(file_path):
         elif "Maximum resident set size (kbytes)" in line:
             memory_kb = int(line.split(":")[-1].strip())
             memory_usage = f"{memory_kb // 1024} MB"
-        # We'll keep this for future use when we add compression ratio
-        # elif "compression ratio:" in line.lower():
-        #     compression_ratio = line.split(":")[-1].strip()
+        elif "Compression Ratio:" in line:
+            compression_ratio = line.split(":")[-1].strip()
 
     return {
         "execution_time": execution_time,

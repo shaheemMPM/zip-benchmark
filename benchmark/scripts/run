@@ -6,10 +6,20 @@ IMPLEMENTATIONS_DIR="$PROJECT_ROOT/implementations"
 RESULTS_DIR="$PROJECT_ROOT/benchmark/results"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 RUN_DIR="$RESULTS_DIR/run_$TIMESTAMP"
+INPUT_DIR="$PROJECT_ROOT/common/test_data/sample_pdfs"
 
 mkdir -p "$RUN_DIR"
 
 all_implementations=("nodejs-jszip" "nodejs-7zip" "python-zipfile" "golang-archive-zip" "rust-zip-rs" "cpp-libzip" "java-util-zip")
+
+calculate_total_input_size() {
+    total_size=0
+    for file in "$INPUT_DIR"/*.pdf; do
+        file_size=$(wc -c < "$file")
+        total_size=$((total_size + file_size))
+    done
+    echo $total_size
+}
 
 run_benchmark() {
     impl_dir="$1"
@@ -27,6 +37,17 @@ run_benchmark() {
     
     echo "Memory Usage: $memory_usage"
     echo "Total Time: $total_time"
+
+    output_zip=$(ls -t ../../output/${impl_name}-*.zip | head -n1)
+    if [ -f "$output_zip" ]; then
+        output_size=$(wc -c < "$output_zip")
+        input_size=$(calculate_total_input_size)
+        compression_ratio=$(awk "BEGIN {printf \"%.2f\", (1 - $output_size / $input_size) * 100}")
+        echo "Compression Ratio: $compression_ratio%"
+        echo "Compression Ratio: $compression_ratio%" >> "$output_file"
+    else
+        echo "Output zip file not found. Compression ratio calculation skipped."
+    fi
     
     echo "Benchmark for $impl_name completed."
     echo
