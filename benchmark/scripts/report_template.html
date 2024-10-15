@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zip Benchmark Report</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Zip Benchmark Report</h1>
+    <p>Generated on: {{ generated_on }}</p>
+    <table>
+      <tr>
+        <th>Implementation</th>
+        <th>Execution Time</th>
+        <th>Memory Usage</th>
+        <th>Compression Ratio</th>
+      </tr>
+      {% for result in results %}
+      <tr>
+        <td>{{ result.implementation }}</td>
+        <td>{{ result.execution_time }}</td>
+        <td>{{ result.memory_usage }}</td>
+        <td>{{ result.compression_ratio }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <h2>Conclusions</h2>
+    <p>Add your analysis and conclusions here.</p>
+  </body>
+</html>

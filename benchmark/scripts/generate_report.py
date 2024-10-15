@@ -2,6 +2,8 @@ import os
 import sys
 from datetime import datetime
 
+from jinja2 import Environment, FileSystemLoader
+
 
 def parse_result_file(file_path):
     with open(file_path, "r") as f:
@@ -28,24 +30,31 @@ def parse_result_file(file_path):
 
 
 def generate_report(results_dir):
-    report = "# Zip Benchmark Report\n\n"
-    report += f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
-
-    report += "| Implementation | Execution Time | Memory Usage | Compression Ratio |\n"
-    report += "|----------------|----------------|--------------|-------------------|\n"
-
+    results = []
     for file in os.listdir(results_dir):
         if file.endswith("_result.txt"):
             impl_name = file.replace("_result.txt", "")
             result = parse_result_file(os.path.join(results_dir, file))
-            report += f"| {impl_name} | {result['execution_time']} | {result['memory_usage']} | {result['compression_ratio']} |\n"
+            results.append(
+                {
+                    "implementation": impl_name,
+                    "execution_time": result["execution_time"],
+                    "memory_usage": result["memory_usage"],
+                    "compression_ratio": result["compression_ratio"],
+                }
+            )
 
-    report += "\n## Conclusions\n\n"
-    report += "Add your analysis and conclusions here.\n"
+    template_dir = os.path.dirname(os.path.abspath(__file__))
+    env = Environment(loader=FileSystemLoader(template_dir))
+    template = env.get_template("report_template.html")
 
-    report_file = os.path.join(results_dir, "report.md")
+    html_content = template.render(
+        generated_on=datetime.now().strftime("%Y-%m-%d %H:%M:%S"), results=results
+    )
+
+    report_file = os.path.join(results_dir, "report.html")
     with open(report_file, "w") as f:
-        f.write(report)
+        f.write(html_content)
 
     print(f"Report generated: {report_file}")
 
