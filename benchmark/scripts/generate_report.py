@@ -15,7 +15,21 @@ def parse_result_file(file_path):
 
     for line in content.split("\n"):
         if "Elapsed (wall clock) time" in line:
-            execution_time = line.split(":")[-1].strip()
+            # Extract the time part (e.g., "43:09.98" or "2:04.68")
+            time_str = (
+                line.split(":")[-2:][0].strip() + ":" + line.split(":")[-1].strip()
+            )
+
+            # Split into minutes and seconds.milliseconds
+            if time_str.count(":") == 2:  # Format is h:mm:ss.ms
+                _, minutes, seconds = time_str.split(":")
+            else:  # Format is m:ss.ms
+                minutes, seconds = time_str.split(":")
+
+            # Convert to total seconds
+            total_seconds = int(minutes) * 60 + float(seconds)
+            execution_time = f"{total_seconds:.2f}"
+
         elif "Maximum resident set size (kbytes)" in line:
             memory_kb = int(line.split(":")[-1].strip())
             memory_usage = f"{memory_kb // 1024} MB"
