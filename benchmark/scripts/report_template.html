@@ -68,9 +68,17 @@
     <p>Add your analysis and conclusions here.</p>
 
     <script>
+      function parseValue(str) {
+        // Remove any % or MB suffix and trim
+        str = str.replace(/[%MB]/g, "").trim();
+        // Convert to number if possible
+        const num = parseFloat(str);
+        return isNaN(num) ? str.toLowerCase() : num;
+      }
+
       function sortTable(n) {
-        var table,
-          rows,
+        var table = document.getElementById("benchmarkTable");
+        var rows,
           switching,
           i,
           x,
@@ -78,28 +86,31 @@
           shouldSwitch,
           dir,
           switchcount = 0;
-        table = document.getElementById("benchmarkTable");
         switching = true;
         dir = "asc";
+
         while (switching) {
           switching = false;
           rows = table.rows;
+
           for (i = 1; i < rows.length - 1; i++) {
             shouldSwitch = false;
-            x = rows[i].getElementsByTagName("TD")[n];
-            y = rows[i + 1].getElementsByTagName("TD")[n];
+            x = parseValue(rows[i].getElementsByTagName("TD")[n].innerHTML);
+            y = parseValue(rows[i + 1].getElementsByTagName("TD")[n].innerHTML);
+
             if (dir == "asc") {
-              if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+              if (x > y) {
                 shouldSwitch = true;
                 break;
               }
             } else if (dir == "desc") {
-              if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+              if (x < y) {
                 shouldSwitch = true;
                 break;
               }
             }
           }
+
           if (shouldSwitch) {
             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
             switching = true;
