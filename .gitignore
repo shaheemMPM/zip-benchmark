@@ -56,8 +56,7 @@ ENV/
 # Project specific
 benchmark/results/*
 !benchmark/results/README.md
-common/test_data/sample_pdfs/*
-common/test_data/sample_pdfs_wd/*
+common/test_data/sample_pdfs*
 !common/test_data/sample_pdfs/.gitkeep
 output/*
 !output/README.md

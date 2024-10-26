@@ -15,9 +15,9 @@ This project aims to benchmark the performance of various programming language a
 ## Getting Started
 
 1. Clone this repository
-2. Follow the setup instructions in `docs/setup.md`
-3. Run benchmarks using the instructions in `docs/running_benchmarks.md`
-4. Analyze results using the guide in `docs/analyzing_results.md`
+2. Follow the setup instructions in [`docs/setup.md`](./docs/setup.md)
+3. Run benchmarks using the instructions in [`docs/running_benchmarks.md`](./docs/running_benchmarks.md)
+4. Analyze results using the guide in [`docs/analyzing_results.md`](./docs/analyzing_results.md)
 
 ## Project Structure
 
