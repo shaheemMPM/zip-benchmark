@@ -32,6 +32,8 @@ This project aims to benchmark the performance of various programming language a
 
 Latest benchmark performed on MacBook Air M2 (16GB RAM, macOS Sonoma 14.6.1) with 30,000 PDFs (total size: 8.56 GB), single-threaded operations using default compression settings:
 
+> **Detailed Results**: View the complete benchmark results with interactive sorting at [https://shaheemmpm.github.io/zip-benchmark/](https://shaheemmpm.github.io/zip-benchmark/)
+
 ### Key Findings
 
 1. **Execution Time**:
