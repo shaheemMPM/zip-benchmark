@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zip Benchmark Report</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+        cursor: pointer;
+      }
+      th:hover {
+        background-color: #ddd;
+      }
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      .sort-icon::after {
+        content: " ↕";
+      }
+      .sort-asc::after {
+        content: " ↑";
+      }
+      .sort-desc::after {
+        content: " ↓";
+      }
+      .conclusions {
+        margin: 20px 0;
+      }
+      .conclusions h3 {
+        margin-top: 25px;
+        color: #333;
+      }
+      .conclusions h4 {
+        margin-top: 20px;
+        color: #444;
+      }
+      .conclusions ul {
+        margin: 10px 0;
+        padding-left: 20px;
+      }
+      .conclusions li {
+        margin: 5px 0;
+        line-height: 1.5;
+      }
+      .conclusions p {
+        margin-top: 20px;
+        font-style: italic;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Zip Benchmark Report</h1>
+    <p>Generated on: 2024-10-26 16:32:19</p>
+    <table id="benchmarkTable">
+      <thead>
+        <tr>
+          <th class="sort-icon" onclick="sortTable(0)">Implementation</th>
+          <th class="sort-icon" onclick="sortTable(1)">Execution Time</th>
+          <th class="sort-icon" onclick="sortTable(2)">Memory Usage</th>
+          <th class="sort-icon" onclick="sortTable(3)">Compression Ratio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>python-zipfile</td>
+          <td>168.58</td>
+          <td>34 MB</td>
+          <td>17.09%</td>
+        </tr>
+
+        <tr>
+          <td>nodejs-jszip</td>
+          <td>54.43</td>
+          <td>8621 MB</td>
+          <td>-0.05%</td>
+        </tr>
+
+        <tr>
+          <td>golang-archive-zip</td>
+          <td>124.68</td>
+          <td>24 MB</td>
+          <td>16.95%</td>
+        </tr>
+
+        <tr>
+          <td>java-util-zip</td>
+          <td>197.11</td>
+          <td>233 MB</td>
+          <td>17.08%</td>
+        </tr>
+
+        <tr>
+          <td>nodejs-7zip</td>
+          <td>48.99</td>
+          <td>109 MB</td>
+          <td>17.35%</td>
+        </tr>
+
+        <tr>
+          <td>rust-zip-rs</td>
+          <td>162.58</td>
+          <td>25 MB</td>
+          <td>17.14%</td>
+        </tr>
+
+        <tr>
+          <td>cpp-libzip</td>
+          <td>2589.98</td>
+          <td>23 MB</td>
+          <td>54.92%</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Conclusions</h2>
+    <div class="conclusions">
+      <h3>Benchmark Environment</h3>
+      <ul>
+        <li><strong>Hardware:</strong> MacBook Air with Apple M2 chip</li>
+        <li><strong>Memory:</strong> 16GB RAM</li>
+        <li><strong>OS:</strong> macOS Sonoma 14.6.1</li>
+        <li><strong>Test Data:</strong> 30,000 PDFs (total size: 8.56 GB)</li>
+        <li>
+          <strong>Configuration:</strong> Single-threaded operations, default
+          compression settings
+        </li>
+      </ul>
+
+      <h3>Key Findings</h3>
+
+      <h4>1. Execution Time</h4>
+      <ul>
+        <li>
+          Node.js implementations (7zip and jszip) are the fastest, completing
+          in under 1 minute
+        </li>
+        <li>
+          Go, Rust, Python, and Java implementations perform similarly, taking
+          2-3 minutes
+        </li>
+        <li>
+          C++ implementation with libzip is notably slower, taking over 43
+          minutes
+        </li>
+      </ul>
+
+      <h4>2. Memory Usage</h4>
+      <ul>
+        <li>Most implementations are memory efficient (23-34 MB)</li>
+        <li>Java implementation uses moderate memory (233 MB)</li>
+        <li>
+          Node.js jszip implementation has high memory usage (8.6 GB),
+          suggesting potential memory management issues
+        </li>
+      </ul>
+
+      <h4>3. Compression Ratio</h4>
+      <ul>
+        <li>C++ libzip achieves the best compression ratio at 54.92%</li>
+        <li>
+          Most other implementations achieve consistent compression ratios
+          around 17%
+        </li>
+        <li>Node.js jszip shows negligible compression (-0.05%)</li>
+      </ul>
+
+      <p>
+        <em
+          >Note: All current implementations are single-threaded and use default
+          compression settings. Significant performance improvements could be
+          achieved through multi-threading and optimized compression
+          configurations.</em
+        >
+      </p>
+    </div>
+
+    <script>
+      function parseValue(str) {
+        // Remove any % or MB suffix and trim
+        str = str.replace(/[%MB]/g, "").trim();
+        // Convert to number if possible
+        const num = parseFloat(str);
+        return isNaN(num) ? str.toLowerCase() : num;
+      }
+
+      function sortTable(n) {
+        var table = document.getElementById("benchmarkTable");
+        var rows,
+          switching,
+          i,
+          x,
+          y,
+          shouldSwitch,
+          dir,
+          switchcount = 0;
+        switching = true;
+        dir = "asc";
+
+        while (switching) {
+          switching = false;
+          rows = table.rows;
+
+          for (i = 1; i < rows.length - 1; i++) {
+            shouldSwitch = false;
+            x = parseValue(rows[i].getElementsByTagName("TD")[n].innerHTML);
+            y = parseValue(rows[i + 1].getElementsByTagName("TD")[n].innerHTML);
+
+            if (dir == "asc") {
+              if (x > y) {
+                shouldSwitch = true;
+                break;
+              }
+            } else if (dir == "desc") {
+              if (x < y) {
+                shouldSwitch = true;
+                break;
+              }
+            }
+          }
+
+          if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+          } else {
+            if (switchcount == 0 && dir == "asc") {
+              dir = "desc";
+              switching = true;
+            }
+          }
+        }
+
+        // Update sort icons
+        var headers = table.getElementsByTagName("TH");
+        for (i = 0; i < headers.length; i++) {
+          headers[i].classList.remove("sort-asc", "sort-desc");
+          if (i === n) {
+            headers[i].classList.add(dir === "asc" ? "sort-asc" : "sort-desc");
+          } else {
+            headers[i].classList.add("sort-icon");
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
